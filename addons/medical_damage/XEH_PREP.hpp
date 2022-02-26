@@ -1,4 +1,5 @@
 PREP(debug_explosiveTest);
+PREP(degradeBodyArmor);
 PREP(determineIfFatal);
 PREP(getTypeOfDamage);
 PREP(handleIncapacitation);

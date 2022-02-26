@@ -21,6 +21,13 @@ params ["_unit", "_allDamages", "_shooter", "_ammo"];
 
 private _typeOfDamage = _ammo call FUNC(getTypeOfDamage);
 if (_typeOfDamage in GVAR(damageTypeDetails)) then {
+    // Degrade body armor for every hit taken before handling wounds
+    // QEGVAR(medical,bodyArmorDegradation) == ["_currentArmorValue", "_numberOfHitsAbsorbed", "_numberOfHitsPenetrated"]
+    if ("Body" in (_allDamages select 2 select 1) && toLower _typeOfDamage isEqualTo "bullet") then {
+        TRACE_1("Yo", _allDamages select 2 select 1)
+        _allDamages = [_unit, _allDamages] call FUNC(degradeBodyArmor); //returns new damage values after taking degradation into account
+    }
+        TRACE_1("Yikes", _allDamages select 2 select 1)
     (GVAR(damageTypeDetails) get _typeOfDamage) params ["", "", "_woundHandlers"];
     
     private _damageData = [_unit, _allDamages, _typeOfDamage];

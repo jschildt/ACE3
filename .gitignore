@@ -1,5 +1,6 @@
 @*
 *.zip
+compats/*
 release/*
 releases/*
 extensions/vcproj32/*

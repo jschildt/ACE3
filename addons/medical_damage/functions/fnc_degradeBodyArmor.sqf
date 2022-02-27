@@ -6,44 +6,62 @@
 *
 * Arguments:
 * 0: Unit <Object>
-* 1: Damage done to each body part <ARRAY>
+* 1: damage done to each body part <ARRAY>
 *
 * Return Value:
 * New damage values after taking degradation into account <ARRAY>
 *
 * Example:
-* [_unit, _allDamages] call ace_medical_engine_fnc_getItemArmor
+* [_unit, _alldamages] call ace_medical_engine_fnc_getItemArmor
 *
 * Public: No
 */
-params ["_unit", "_allDamages"];
-	
-	private _oldBodyArmorData = _unit getVariable QEGVAR(medical,bodyArmorDegradation);
-	private _oldArmorValue = _bodyArmorData select 0;
-	private _hitsAbsorbed = _bodyArmorData select 1;
-	private _hitsPenetrated = _bodyArmorData select 2;
-	systemChat "JOOOO";
-	if (_oldArmorValue == -1) then {
-		_armorValue = [_unit vest, "HitChest"] call EFUNC(medical_engine, getItemArmor);
-		oldArmorValue = _armorValue;
-		hint str _armorValue;
-	}
-	
-	{
-		// Current result is saved in variable _x
-		if ("body" in _x || "Body" in _x) then {
-			_damage = _x select 0;
+params ["_unit", "_armorData"];
 
-			if (_damage < PENETRATION_THRESHOLD) then {
-				_hitsAbsorbed = _hitsAbsorbed + 1;
-			} else {
-				_hitsPenetrated = _hitsPenetrated + 1;
-			};
-			_newArmorValue == 0 max (_oldArmorValue - _armorValue * (((0.01*_hitsAbsorbed) + (0.02*_hitsPenetrated)) max 0.01)); 
-			hint str _newArmorValue;
-			_newBodyArmorData = [_newArmorValue, _hitsAbsorbed, _hitsPenetrated];
-			_unit setVariable [QEGVAR(medical,bodyArmorDegradation), _newBodyArmorData];
-			
-		};
-	} forEach _allDamages;
-_allDamages
+//systemChat "elp";
+_oldBodyArmorData = _unit getVariable QEGVAR(medical,bodyArmorDegradation);
+_armor = (_oldBodyArmorData select 3); //toFixed 4;
+_currentArmor = (_oldBodyArmorData select 0); //toFixed 4;
+_hitsAbsorbed = (_oldBodyArmorData select 1);
+_hitsPenetrated = (_oldBodyArmorData select 2);
+_damage = (_armorData select 0 select 0);
+_hitPoint = (_armorData select 0 select 1);
+_damageBeforeArmor = (_armorData select 0 select 2);
+//systemChat format["%1", _oldBodyArmorData];
+
+if (_currentArmor isEqualTo -1) then {
+        _armor = ([_unit, "HitChest"] call EFUNC(medical_engine,getHitpointArmor));
+        _currentArmor = _armor;
+};
+
+if (_damage < PENETRATION_THRESHOLD) then {
+    _hitsAbsorbed = _hitsAbsorbed + 1;
+} else {
+    _hitsPenetrated = _hitsPenetrated + 1;
+    _hitsAbsorbed = _hitsAbsorbed + 1;
+};
+
+if (_hitsAbsorbed == 0 && _hitsPenetrated == 0) then {
+    _currentArmor = _armor;
+} else {
+    _currentArmor = _armor - _armor * (((_hitsAbsorbed)^2)/100) * (_hitsPenetrated max 1);
+};
+
+systemChat format["(Armor) Current: %1, Original: %2", _currentArmor, _armor];
+//systemChat format["1st calc done %1",_currentArmor];
+// TODO: Maybe try subtracting % instead of tracking hits e.g. 5% for absorb 10% for pen
+
+_newDamage = _damageBeforeArmor / _currentArmor;
+//systemChat format["%1 / %2 = %3",_damageBeforeArmor,_currentArmor,_newDamage];
+_newDamageBeforeArmor = _newDamage * _currentArmor;
+//systemChat format["%1 * %2 = %3",_damageBeforeArmor,_currentArmor,_newDamageBeforeArmor];
+
+
+_newBodyArmorData = [_currentArmor, _hitsAbsorbed, _hitsPenetrated, _armor];
+//systemChat format["%1", _newBodyArmorData];
+_unit setVariable [QEGVAR(medical,bodyArmorDegradation), _newBodyArmorData];
+
+//systemChat format["%1, %2, %3", (_armorData select 0 select 0), (_armorData select 0 select 2), _hitPoint];
+(_armorData select 0) set [0, _newDamage];
+(_armorData select 0) set [2, _newDamageBeforeArmor];
+_armorData

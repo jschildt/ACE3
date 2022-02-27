@@ -23,11 +23,11 @@ private _typeOfDamage = _ammo call FUNC(getTypeOfDamage);
 if (_typeOfDamage in GVAR(damageTypeDetails)) then {
     // Degrade body armor for every hit taken before handling wounds
     // QEGVAR(medical,bodyArmorDegradation) == ["_currentArmorValue", "_numberOfHitsAbsorbed", "_numberOfHitsPenetrated"]
-    if ("Body" in (_allDamages select 2 select 1) && toLower _typeOfDamage isEqualTo "bullet") then {
-        TRACE_1("Yo", _allDamages select 2 select 1)
+    if ("Body" in (_allDamages select 0) &&  _typeOfDamage isEqualTo "bullet") then {
+        //systemChat format ["Yo %1", _allDamages select 0];
         _allDamages = [_unit, _allDamages] call FUNC(degradeBodyArmor); //returns new damage values after taking degradation into account
-    }
-        TRACE_1("Yikes", _allDamages select 2 select 1)
+    };
+    //hint format ["Yikes %1", _allDamages];
     (GVAR(damageTypeDetails) get _typeOfDamage) params ["", "", "_woundHandlers"];
     
     private _damageData = [_unit, _allDamages, _typeOfDamage];
@@ -37,6 +37,5 @@ if (_typeOfDamage in GVAR(damageTypeDetails)) then {
         if !(_damageData isEqualType [] && {(count _damageData) >= 3}) exitWith {
             TRACE_1("Return invalid, terminating wound handling", _damageData);
         };
-    } forEach _woundHandlers;
-    
+    } forEach _woundHandlers;  
 };

@@ -68,24 +68,24 @@ if (!isServer) then {
 
             ERROR(_error);
 
-            if (_mode < 2) then {
-                _text = composeText [lineBreak, parseText format ["<t align='center'>%1</t>", _text]];
-
-                private _rscLayer = "ACE_RscErrorHint" call BIS_fnc_rscLayer;
-                _rscLayer cutRsc ["ACE_RscErrorHint", "PLAIN", 0, true];
-
-                disableSerialization;
-                private _ctrlHint = uiNamespace getVariable "ACE_ctrlErrorHint";
-                _ctrlHint ctrlSetStructuredText _text;
-
-                if (_mode == 0) then {
-                    [{
-                        params ["_rscLayer"];
-                        TRACE_2("Hiding Error message after 10 seconds",time,_rscLayer);
-                        _rscLayer cutFadeOut 0.2;
-                    }, [_rscLayer], 10] call CBA_fnc_waitAndExecute;
-                };
-            };
+            //if (_mode < 2) then {
+            //    _text = composeText [lineBreak, parseText format ["<t align='center'>%1</t>", _text]];
+            //
+            //    private _rscLayer = "ACE_RscErrorHint" call BIS_fnc_rscLayer;
+            //    _rscLayer cutRsc ["ACE_RscErrorHint", "PLAIN", 0, true];
+            //
+            //    disableSerialization;
+            //    private _ctrlHint = uiNamespace getVariable "ACE_ctrlErrorHint";
+            //    _ctrlHint ctrlSetStructuredText _text;
+            //
+            //    if (_mode == 0) then {
+            //        [{
+            //            params ["_rscLayer"];
+            //            TRACE_2("Hiding Error message after 10 seconds",time,_rscLayer);
+            //            _rscLayer cutFadeOut 0.2;
+            //        }, [_rscLayer], 10] call CBA_fnc_waitAndExecute;
+            //    };
+            //};
 
             if (_mode == 2) then {
                 [{alive player}, { // To be able to show list if using checkAll

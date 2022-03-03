@@ -233,20 +233,20 @@ if (_currentVersion != _previousVersion) then {
     profileNamespace setVariable ["ACE_VersionNumberString", _currentVersion];
 };
 
-call FUNC(checkFiles);
+//call FUNC(checkFiles);
 
 
 //////////////////////////////////////////////////
 // Set up ace_settingsInitialized eventhandler
 //////////////////////////////////////////////////
 
-["CBA_settingsInitialized", {
-    [
-        GVAR(checkPBOsAction),
-        GVAR(checkPBOsCheckAll),
-        GVAR(checkPBOsWhitelist)
-    ] call FUNC(checkPBOs)
-}] call CBA_fnc_addEventHandler;
+//["CBA_settingsInitialized", {
+//    [
+//        GVAR(checkPBOsAction),
+//        GVAR(checkPBOsCheckAll),
+//        GVAR(checkPBOsWhitelist)
+//    ] call FUNC(checkPBOs)
+//}] call CBA_fnc_addEventHandler;
 
 
 

@@ -44,10 +44,10 @@ if (_damage < PENETRATION_THRESHOLD) then {
 if (_hitsAbsorbed == 0 && _hitsPenetrated == 0) then {
     _currentArmor = _armor;
 } else {
-    _currentArmor = _armor - _armor * (((_hitsAbsorbed)^2)/100) * (_hitsPenetrated max 1);
+    _currentArmor = 2 max (_armor - _armor * (((_hitsAbsorbed)^2)/100) * (_hitsPenetrated max 1));
 };
 
-systemChat format["(Armor) Current: %1, Original: %2", _currentArmor, _armor];
+//systemChat format["(Armor) Current: %1, Original: %2", _currentArmor, _armor];
 //systemChat format["1st calc done %1",_currentArmor];
 // TODO: Maybe try subtracting % instead of tracking hits e.g. 5% for absorb 10% for pen
 

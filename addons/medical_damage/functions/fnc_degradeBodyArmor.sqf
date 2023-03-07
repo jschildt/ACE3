@@ -12,7 +12,7 @@
 * New damage values after taking degradation into account <ARRAY>
 *
 * Example:
-* [_unit, _alldamages] call ace_medical_engine_fnc_getItemArmor
+* [_unit, _hitData] call ace_medical_damage_fnc_bodyArmorDegradation
 *
 * Public: No
 */
@@ -24,28 +24,30 @@ _armor = (_oldBodyArmorData select 3); //toFixed 4;
 _currentArmor = (_oldBodyArmorData select 0); //toFixed 4;
 _hitsAbsorbed = (_oldBodyArmorData select 1);
 _hitsPenetrated = (_oldBodyArmorData select 2);
-_damage = (_armorData select 0 select 0);
-_hitPoint = (_armorData select 0 select 1);
+//_damage = (_armorData select 0 select 0);
+//_hitPoint = (_armorData select 0 select 1);
 _damageBeforeArmor = (_armorData select 0 select 2);
 //systemChat format["%1", _oldBodyArmorData];
 
-if (_currentArmor isEqualTo -1) then {
+if (_currentArmor isEqualTo -1) exitWith {
         _armor = ([_unit, "HitChest"] call EFUNC(medical_engine,getHitpointArmor));
         _currentArmor = _armor;
+        _unit setVariable [QEGVAR(medical,bodyArmorDegradation), [_currentArmor,0,0,_armor]];
+        _armorData
 };
 
-if (_damage < PENETRATION_THRESHOLD) then {
+if ((_armorData select 0 select 0) < PENETRATION_THRESHOLD) then {
     _hitsAbsorbed = _hitsAbsorbed + 1;
 } else {
     _hitsPenetrated = _hitsPenetrated + 1;
-    _hitsAbsorbed = _hitsAbsorbed + 1;
+   // _hitsAbsorbed = _hitsAbsorbed + 1;
 };
+//armor - (armor_before_hit * math.log((math.pow(dmg_before_armor, absorb*pen)), 20))/100
 
-if (_hitsAbsorbed == 0 && _hitsPenetrated == 0) then {
-    _currentArmor = _armor;
-} else {
-    _currentArmor = 2 max (_armor - _armor * (((_hitsAbsorbed)^2)/100) * (_hitsPenetrated max 1));
-};
+_log1 = log (_damageBeforeArmor^(_hitsAbsorbed+_hitsPenetrated*2));
+_log2 = log 2;
+_currentArmor = 1 max (_currentArmor - ((_armor *( _log1 / _log2))/200));//2 max (_armor - _armor * (((_hitsAbsorbed)^2)/100) * (_hitsPenetrated max 1));
+//};
 
 //systemChat format["(Armor) Current: %1, Original: %2", _currentArmor, _armor];
 //systemChat format["1st calc done %1",_currentArmor];

@@ -13,7 +13,7 @@ class ACE_Medical_Injuries {
         // Occur when an entire structure or part of it is forcibly pulled away, such as the loss of a permanent tooth or an ear lobe. Explosions, gunshots, and animal bites may cause avulsions.
         class Avulsion {
             bleeding = 0.1;
-            pain = 1.0;
+            pain = 1.25;
             causeLimping = 1;
         };
         // Also called bruises, these are the result of a forceful trauma that injures an internal structure without breaking the skin. Blows to the chest, abdomen, or head with a blunt instrument (e.g. a football or a fist) can cause contusions.
@@ -21,10 +21,15 @@ class ACE_Medical_Injuries {
             bleeding = 0;
             pain = 0.3;
         };
+        // TODO
+        //class ChestFracture {
+        //    bleeding = 0;
+        //    pain = 1;
+        //};
         // Occur when a heavy object falls onto a person, splitting the skin and shattering or tearing underlying structures.
         class Crush {
             bleeding = 0.05;
-            pain = 0.8;
+            pain = 1.1;
             causeLimping = 1;
             causeFracture = 1;
         };
@@ -41,7 +46,7 @@ class ACE_Medical_Injuries {
         // Also called velocity wounds, they are caused by an object entering the body at a high speed, typically a bullet or small peices of shrapnel.
         class VelocityWound {
             bleeding = 0.2;
-            pain = 0.9;
+            pain = 1.2;
             causeLimping = 1;
             causeFracture = 1;
         };
@@ -97,14 +102,20 @@ class ACE_Medical_Injuries {
                 weighting[] = {{0.35, 0}, {0.35, 1}};
                 // bruises caused by bullets hitting the plate are big
                 sizeMultiplier = 3.2;
-                // tone down the pain a tiny bit to compensate
-                painMultiplier = 0.8;
+                // tone down the pain a tiny bit to compensate (actually it would hurt like hell...)
+                painMultiplier = 2.1;
             };
+            //class ChestFracture {
+            //    weighting[] = {{0.35, 1}, {0.15, 0}};
+            //    sizeMultiplier = 3.2;
+            //    painMultiplier = 1;
+            //};
             class VelocityWound {
                 // velocity wounds are only in the 0.35-1.5 range
                 weighting[] = {{1.5, 0}, {1.5, 1}, {0.35, 1}, {0.35, 0}};
                 // velocity wounds will tend to be medium or large
                 sizeMultiplier = 0.9;
+                painMultiplier = 1.2;
             };
         };
         class grenade {

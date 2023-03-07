@@ -17,7 +17,7 @@
 #define HEAD_DAMAGE_THRESHOLD EGVAR(medical,const_headDamageThreshold)
 #define HEAD_DAMAGE_THRESHOLD_DEFAULT 1
 #define ORGAN_DAMAGE_THRESHOLD EGVAR(medical,const_organDamageThreshold)
-#define ORGAN_DAMAGE_THRESHOLD_DEFAULT 0.6
+#define ORGAN_DAMAGE_THRESHOLD_DEFAULT 0.5 //0.6
 // Consts for determineIfFatal: sum of damage (values are calcualted at runtime in preInit)
 #define FATAL_SUM_DAMAGE_WEIBULL_K EGVAR(medical,const_fatalSumDamageWeibull_K)
 #define FATAL_SUM_DAMAGE_WEIBULL_L EGVAR(medical,const_fatalSumDamageWeibull_L)
@@ -25,7 +25,7 @@
 // Chance to hit heart based on ratio of 70kg (approx. 70L) body to 70mL stroke volume of heart
 // Assuming torso is 50% of the body volume (35L)
 #define HEART_HIT_CHANCE EGVAR(medical,const_heartHitChance)
-#define HEART_HIT_CHANCE_DEFAULT 0.05
+#define HEART_HIT_CHANCE_DEFAULT 0.1 //0.05
 
 #define MEDICAL_ACTION_DISTANCE 1.75
 
@@ -74,7 +74,7 @@
 
 // --- pain
 #define PAIN_UNCONSCIOUS EGVAR(medical,const_painUnconscious)
-#define PAIN_UNCONSCIOUS_DEFAULT 0.5
+#define PAIN_UNCONSCIOUS_DEFAULT 0.3
 
 // Pain fade out time (time it takes until pain is guaranteed to be completly gone)
 #define PAIN_FADE_TIME EGVAR(medical,const_painFadeTime)

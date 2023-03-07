@@ -30,19 +30,19 @@
             QEGVAR(medical,bodyArmorDegradation),
            [-1, 0, 0, 0]
         ];
-        //["ace_medical_woundReceived", {	 
-	    //    //private _allWounds = _this select 1;
-	    //    //{	
-	    //    //	_x params ["_damage", "_bodyPart"];
-	    //    //	systemChat format["[%1] ACE Wound inflicted: (%2)  %3", [daytime] call BIS_fnc_timeToString,  _bodypart, _damage];
-	    //    //} foreach _this select 1;
-	    //    private _bodyPart = str (_this select 1 select 0);
-	    //    private _target = _this select 0;
-//
-	    //    systemChat format["[%1] Hit: (%2) %3   %4", [daytime] call BIS_fnc_timeToString, _bodyPart, _this select 2, _this select 4];
-        //    //_var = _unit getVariable  QEGVAR(medical,bodyArmorDegradation);
-        //    //hint str _var;
-        //}] call CBA_fnc_addEventHandler;
+        ["ace_medical_woundReceived", {	 
+	        private _allWounds = _this select 1;
+	        {	
+	        	_x params ["_damage", "_bodyPart"];
+	        	systemChat format["[%1] ACE Wound inflicted: (%2)  %3", [daytime] call BIS_fnc_timeToString,  _bodypart, _damage];
+	        } foreach _this select 1;
+	        private _bodyPart = str (_this select 1 select 0);
+	        private _target = _this select 0;
+
+	        systemChat format["[%1] Hit: (%2) %3   %4", [daytime] call BIS_fnc_timeToString, _bodyPart, _this select 2, _this select 4];
+            //_var = _unit getVariable  QEGVAR(medical,bodyArmorDegradation);
+            //hint str _var;
+        }] call CBA_fnc_addEventHandler;
     };
 }, nil, [IGNORE_BASE_UAVPILOTS], true] call CBA_fnc_addClassEventHandler;
 

@@ -21,6 +21,11 @@ class ACE_Medical_Injuries {
             bleeding = 0;
             pain = 0.3;
         };
+        // TODO
+        //class ChestFracture {
+        //    bleeding = 0;
+        //    pain = 1;
+        //};
         // Occur when a heavy object falls onto a person, splitting the skin and shattering or tearing underlying structures.
         class Crush {
             bleeding = 0.05;
@@ -97,14 +102,20 @@ class ACE_Medical_Injuries {
                 weighting[] = {{0.35, 0}, {0.35, 1}};
                 // bruises caused by bullets hitting the plate are big
                 sizeMultiplier = 3.2;
-                // tone down the pain a tiny bit to compensate
-                painMultiplier = 0.8;
+                // tone down the pain a tiny bit to compensate (actually it would hurt like hell...)
+                painMultiplier = 1;
             };
+            //class ChestFracture {
+            //    weighting[] = {{0.35, 1}, {0.15, 0}};
+            //    sizeMultiplier = 3.2;
+            //    painMultiplier = 1;
+            //};
             class VelocityWound {
                 // velocity wounds are only in the 0.35-1.5 range
                 weighting[] = {{1.5, 0}, {1.5, 1}, {0.35, 1}, {0.35, 0}};
                 // velocity wounds will tend to be medium or large
                 sizeMultiplier = 0.9;
+                //painMultiplier = 1.2;
             };
         };
         class grenade {

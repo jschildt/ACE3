@@ -64,6 +64,16 @@ class ADDON {
             class ContusionMedium: Contusion {};
             class ContusionLarge: Contusion {};
 
+            //class ChestFracture: Contusion {
+            //    effectiveness = 0;
+            //    reopeningChance = 0;
+            //    reopeningMinDelay = 0;
+            //    reopeningMaxDelay = 0;
+            //};
+            //class ChestFractureMinor: ChestFracture {};
+            //class ChestFractureMedium: ChestFracture {};
+            //class ChestFractureLarge: ChestFracture {};
+
             class Crush: Abrasion {
                 effectiveness = 1;
                 reopeningChance = 0.2;

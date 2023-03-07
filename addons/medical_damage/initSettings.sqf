@@ -33,7 +33,14 @@
     [0, 1, 0.1, 2, true],
     true
 ] call CBA_fnc_addSetting;
-
+//[
+//    QEGVAR(medical,AiPainUnconsciousChance),
+//    "SLIDER",
+//    [LSTRING("AI Pain Unconscious Chance"), LSTRING(PainUnconsciousChance_Description)],
+//    ELSTRING(medical,Category),
+//    [0, 1, 0.1, 2, true],
+//    true
+//] call CBA_fnc_addSetting;
 [
     QEGVAR(medical,deathChance),
     "SLIDER",
